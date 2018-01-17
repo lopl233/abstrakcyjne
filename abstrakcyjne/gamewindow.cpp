@@ -3,6 +3,7 @@
 #include <map>  
 #include "constants.cpp"
 #include <string>
+#include "TextureHolder.cpp"
 
 class GameWindow {
 
@@ -11,6 +12,7 @@ private:
 	SDL_Renderer* renderer;
 	std::map<int, int> PressedKeys;
 	bool running = true;
+	TextureHolder * textureholder;
 
 public:
 	void onKeyDown(SDL_Event* evt) {
@@ -31,6 +33,7 @@ public:
 			printf("IMG_Init: %s\n", IMG_GetError());
 		}
 		if (SDL_CreateWindowAndRenderer(DISPLAY_WIDTH, DISPLAY_HEIGHT, flags, &window, &renderer)) { return; }
+		textureholder = new TextureHolder(renderer);
 	}
 
 	~GameWindow() {
@@ -61,17 +64,24 @@ public:
 		SDL_SetRenderDrawColor(renderer, 168, 0, 163, SDL_ALPHA_OPAQUE);
 		SDL_RenderFillRect(renderer, &kwadrat2);
 
-		SDL_Surface* surface = IMG_Load("s.png");
-		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-		SDL_FreeSurface(surface);
+		
 		SDL_Rect destination;
 		destination.x = 33;
 		destination.y = 33;
 		destination.w = 33;
 		destination.h = 33;
 
+		SDL_Rect destination2;
+		destination2.x = 66;
+		destination2.y = 66;
+		destination2.w = 66;
+		destination2.h = 66;
+
+		SDL_Texture* texture = textureholder->getTexture("s.png");
+		SDL_Texture* texture2 = textureholder->getTexture("stickman.png");
+
 		SDL_RenderCopy(renderer, texture, NULL, &destination);
-		SDL_RenderPresent(renderer);
+		SDL_RenderCopy(renderer, texture2, NULL, &destination2);
 
 		SDL_RenderPresent(renderer);
 	}
