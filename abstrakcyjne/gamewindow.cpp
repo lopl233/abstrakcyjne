@@ -22,6 +22,28 @@ public:
 	void onKeyUp(SDL_Event* evt) {
 		PressedKeys[evt->key.keysym.sym] = 0;
 	}
+
+	void drawTexture(int x, int y, int w, int h, string texturename) {
+		SDL_Rect destination;
+		destination.x = x;
+		destination.y = y;
+		destination.w = w;
+		destination.h = h;
+
+		SDL_Texture* texture = textureholder->getTexture(texturename);
+		SDL_RenderCopy(renderer, texture, NULL, &destination);
+	}
+
+	void drawRectangle(int x, int y, int w, int h, int r, int g, int b) {
+		SDL_Rect kwadrat;
+		kwadrat.x = x;
+		kwadrat.y = y;
+		kwadrat.w = w;
+		kwadrat.h = h;
+		SDL_SetRenderDrawColor(renderer, r, g, b, SDL_ALPHA_OPAQUE);
+		SDL_RenderFillRect(renderer, &kwadrat);
+	}
+	
 	GameWindow() :window(NULL), renderer(NULL) {
 		int flags = SDL_WINDOW_SHOWN;
 		// load support for the PNG image formats
@@ -43,45 +65,17 @@ public:
 	}
 
 	void draw() {
-		// Clear screen  
+
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 
-		// Render hero  
-		SDL_Rect kwadrat;
-		kwadrat.x = 20;
-		kwadrat.y = 20;
-		kwadrat.w = 20;
-		kwadrat.h = 20;
-		SDL_SetRenderDrawColor(renderer, 168, 142, 163, SDL_ALPHA_OPAQUE);
-		SDL_RenderFillRect(renderer, &kwadrat);
+		drawRectangle(33, 66, 33, 33, 255, 123, 255);
+		drawRectangle(66, 66, 33, 33, 168, 142, 163);
+		drawRectangle(99, 66, 33, 33, 0, 255, 255);
 
-		SDL_Rect kwadrat2;
-		kwadrat2.x = 40;
-		kwadrat2.y = 40;
-		kwadrat2.w = 40;
-		kwadrat2.h = 40;
-		SDL_SetRenderDrawColor(renderer, 168, 0, 163, SDL_ALPHA_OPAQUE);
-		SDL_RenderFillRect(renderer, &kwadrat2);
-
-		
-		SDL_Rect destination;
-		destination.x = 33;
-		destination.y = 33;
-		destination.w = 33;
-		destination.h = 33;
-
-		SDL_Rect destination2;
-		destination2.x = 66;
-		destination2.y = 66;
-		destination2.w = 66;
-		destination2.h = 66;
-
-		SDL_Texture* texture = textureholder->getTexture("s.png");
-		SDL_Texture* texture2 = textureholder->getTexture("stickman.png");
-
-		SDL_RenderCopy(renderer, texture, NULL, &destination);
-		SDL_RenderCopy(renderer, texture2, NULL, &destination2);
+		drawTexture(33, 33, 33, 33, "s.png");
+		drawTexture(66, 33, 33, 33, "stickman.png");
+		drawTexture(99, 33, 33, 33, "s.png");
 
 		SDL_RenderPresent(renderer);
 	}
