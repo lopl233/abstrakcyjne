@@ -51,10 +51,8 @@ public:
 		for (auto it = myvector.begin(); it != myvector.end(); ++it)
 			addTexture(*it);
 	}
-
+	 
 	SDL_Texture* getTexture(string filename) {
-		
-
 		return textureMap[filename];
 	}
 

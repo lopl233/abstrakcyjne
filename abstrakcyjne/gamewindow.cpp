@@ -46,14 +46,16 @@ public:
 	
 	GameWindow() :window(NULL), renderer(NULL) {
 		int flags = SDL_WINDOW_SHOWN;
-		// load support for the PNG image formats
+
 		if (SDL_Init(SDL_INIT_EVERYTHING)) { return; }
+		//int img_flags = IMG_INIT_PNG || IMG_INIT_JPG;
+		//int img_flags = IMG_INIT_JPG;
 		int img_flags = IMG_INIT_PNG;
 
 		int initted = IMG_Init(img_flags);
 		if ((initted&img_flags) != img_flags) {
 			printf("IMG_Init: %s\n", IMG_GetError());
-		}
+		} 
 		if (SDL_CreateWindowAndRenderer(DISPLAY_WIDTH, DISPLAY_HEIGHT, flags, &window, &renderer)) { return; }
 		textureholder = new TextureHolder(renderer);
 	}
@@ -73,7 +75,7 @@ public:
 		drawRectangle(66, 66, 33, 33, 168, 142, 163);
 		drawRectangle(99, 66, 33, 33, 0, 255, 255);
 
-		drawTexture(33, 33, 33, 33, "s.png");
+		drawTexture(33, 33, 33, 33, "spell.jpg");
 		drawTexture(66, 33, 33, 33, "stickman.png");
 		drawTexture(99, 33, 33, 33, "s.png");
 
