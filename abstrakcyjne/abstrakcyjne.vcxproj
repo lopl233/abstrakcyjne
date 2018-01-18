@@ -127,11 +127,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="constants.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="FieldGenerator.cpp" />
     <ClCompile Include="gamewindow.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Hero.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
