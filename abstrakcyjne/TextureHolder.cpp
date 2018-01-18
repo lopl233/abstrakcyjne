@@ -2,21 +2,17 @@
 #include <SDL_image.h>
 #include <map>  
 #include <string>
-#include <iostream>
 #include <Windows.h>
 #include <vector>
 
-
 using namespace std;
-
-
 
 
 class TextureHolder {
 private:
 	map<string , SDL_Texture*> textureMap;
 	SDL_Renderer* renderer;
-	void addTexture(string filename) {
+	void addTexture(const string filename) {
 
 		string filePath = "textures/" + filename;
 
@@ -27,7 +23,7 @@ private:
 		textureMap[filename] = texture;
 
 	}
-	vector<string> getFileNames(string folder)
+	vector<string> getFileNames(const string folder)
 	{
 		vector<string> names;
 		string search_path = folder + "/*.*";
@@ -52,7 +48,7 @@ public:
 			addTexture(*it);
 	}
 	 
-	SDL_Texture* getTexture(string filename) {
+	SDL_Texture* getTexture(const string filename) {
 		return textureMap[filename];
 	}
 

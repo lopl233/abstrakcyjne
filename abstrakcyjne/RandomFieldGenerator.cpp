@@ -1,19 +1,26 @@
-#include "Field.h"
+#include "RandomFieldGenerator.h"
 #include "ForestField.h"
+#include "SandField.h"
 
-class RandomFieldGenerator
+
+RandomFieldGenerator::RandomFieldGenerator()
 {
-public:
-	static Field& GetRandomField()
+}
+
+Field* RandomFieldGenerator::GetRandomField()
+{
+	switch (rand() % 2)
 	{
-		auto v1 = rand() % 2;
-		switch(rand() % 2)
-		{
-		case 0:
-			return ForestField();
-			break;
-		case 1:
-			break;
-		}
+	case 0:
+		return new ForestField();
+	case 1:
+		return new SandField();
+	default:
+		return nullptr;
 	}
-};
+}
+
+
+RandomFieldGenerator::~RandomFieldGenerator()
+{
+}

@@ -128,17 +128,28 @@
   <ItemGroup>
     <ClCompile Include="constants.cpp" />
     <ClCompile Include="Field.cpp" />
-    <ClCompile Include="FieldGenerator.cpp" />
+    <ClCompile Include="FieldHolder.cpp" />
+    <ClCompile Include="ForestField.cpp" />
     <ClCompile Include="gamewindow.cpp" />
+    <ClCompile Include="RandomFieldGenerator.cpp" />
+    <ClCompile Include="SandField.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TextureHolder.cpp" />
+    <ClCompile Include="WallField.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Field.h" />
+    <ClInclude Include="FieldHolder.h" />
+    <ClInclude Include="RandomFieldGenerator.h" />
+    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="ForestField.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="SandField.h" />
+    <ClInclude Include="WallField.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

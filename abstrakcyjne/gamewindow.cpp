@@ -48,9 +48,9 @@ public:
 		int flags = SDL_WINDOW_SHOWN;
 
 		if (SDL_Init(SDL_INIT_EVERYTHING)) { return; }
-		//int img_flags = IMG_INIT_PNG || IMG_INIT_JPG;
+		int img_flags = IMG_INIT_PNG || IMG_INIT_JPG;
 		//int img_flags = IMG_INIT_JPG;
-		int img_flags = IMG_INIT_PNG;
+		//int img_flags = IMG_INIT_PNG;
 
 		int initted = IMG_Init(img_flags);
 		if ((initted&img_flags) != img_flags) {

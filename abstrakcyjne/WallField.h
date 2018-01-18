@@ -1,10 +1,10 @@
 #pragma once
 #include "Field.h"
-class ForestField :
+class WallField :
 	public Field
 {
 public:
-	ForestField();
-	~ForestField();
+	WallField();
+	~WallField();
 };
 
