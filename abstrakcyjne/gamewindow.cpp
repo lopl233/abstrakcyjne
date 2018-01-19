@@ -1,13 +1,21 @@
 #include <SDL.h> 
 #include <SDL_image.h>
+
+#include <iostream>
+#include <cstdio>
 #include <map>  
-#include "constants.cpp"
 #include <string>
+
+#include "constants.cpp"
 #include "TextureHolder.cpp"
+#include "GameModel.h"
+
 
 class GameWindow {
 
 private:
+	
+	GameModel * gamemodel;
 	SDL_Window * window;
 	SDL_Renderer* renderer;
 	std::map<int, int> PressedKeys;
@@ -43,8 +51,27 @@ public:
 		SDL_SetRenderDrawColor(renderer, r, g, b, SDL_ALPHA_OPAQUE);
 		SDL_RenderFillRect(renderer, &kwadrat);
 	}
+
+	void drawMap() {
+		Hero * hero = gamemodel->getHero();
+		FieldHolder * fieldholder = gamemodel->getFieldHolder();
+		for(int x = hero->getX() - 5; x<= hero->getX() + 5; x++)
+			for (int y = hero->getY() - 5; y <= hero->getY() + 5; y++) {
+				drawTexture((
+					hero->getX() - x) * FIELD_SIZE + 310, 
+					(hero->getY() - y) * FIELD_SIZE + 310, 
+					FIELD_SIZE, 
+					FIELD_SIZE, 
+					fieldholder->getField(x,y)->getFilename() );
+			}
+	}
+
+	void drawHero() {
+		Hero * hero = gamemodel->getHero();
+		drawTexture(310, 310, FIELD_SIZE, FIELD_SIZE, hero->getFilename());
+	}
 	
-	GameWindow() :window(NULL), renderer(NULL) {
+	GameWindow(GameModel * gamemodel) :gamemodel(gamemodel),window(NULL), renderer(NULL) {
 		int flags = SDL_WINDOW_SHOWN;
 
 		if (SDL_Init(SDL_INIT_EVERYTHING)) { return; }
@@ -71,13 +98,16 @@ public:
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 
-		drawRectangle(33, 66, 33, 33, 255, 123, 255);
+		/*drawRectangle(33, 66, 33, 33, 255, 123, 255);
 		drawRectangle(66, 66, 33, 33, 168, 142, 163);
 		drawRectangle(99, 66, 33, 33, 0, 255, 255);
 
 		drawTexture(33, 33, 33, 33, "spell.jpg");
-		drawTexture(66, 33, 33, 33, "stickman.png");
-		drawTexture(99, 33, 33, 33, "s.png");
+		drawTexture(66, 33, 33, 33, "warrior.png");
+		drawTexture(99, 33, 33, 33, "s.png");*/
+
+		drawMap();
+		drawHero();
 
 		SDL_RenderPresent(renderer);
 	}
@@ -86,6 +116,9 @@ public:
 		SDL_Event event;
 		int lastDraw = SDL_GetTicks();
 		int now;
+		int frames = 0;
+		int lastFpsUpdate = 0;
+		char szFps[128];
 		while (running) {
 			//Obs³uga eventów, w tym wcisakania klawiszy
 			if (SDL_PollEvent(&event)) {
@@ -98,10 +131,18 @@ public:
 
 			//sprawdzamy czy od ostatniej klatki mine³o doœæ czasu, je¿eli tak to j¹ generujemy
 			now = SDL_GetTicks();
+			if (now - lastFpsUpdate >= 1000) {
+				sprintf_s(szFps, "FPS: %d FPS", frames);
+				SDL_SetWindowTitle(window, szFps);
+				frames = 0;
+				lastFpsUpdate = lastDraw;
+			}
 			//test();
-			if (now - lastDraw >= UPDATE_INTERVAL) {
+			if (now - lastDraw >= 1000/FPS) {
 				lastDraw = SDL_GetTicks();
 				draw();
+				frames++;
+				
 			}
 
 		}

@@ -1,10 +1,10 @@
-#include "gamewindow.cpp"
+#include "Game.h"
 #undef main //sdl coœ sam miesza z mainem przy imporcie <SDL.h> to trzeba po nim posprz¹taæ
 
 
 int main() {
-	GameWindow gamewindow;
-	gamewindow.run();
+	Game *game = new Game();
+	game->run();
 
 	return 0;
 }

@@ -5,6 +5,7 @@
 ForestField::ForestField()
 {
 	filename = "forest.png";
+	canBeSteped = true;
 }
 
 ForestField::~ForestField()

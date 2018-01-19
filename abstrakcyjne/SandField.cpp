@@ -4,7 +4,8 @@
 
 SandField::SandField()
 {
-	filename = "sand.png";
+	filename = "sand.jpg";
+	canBeSteped = true;
 }
 
 SandField::~SandField()

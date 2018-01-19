@@ -8,5 +8,11 @@ class FieldHolder
 public:
 	FieldHolder(int size);
 	~FieldHolder();
+
+	Field* getField(int x, int y) {
+		return (*fields)[x][y];
+	}
+
+
 };
 
