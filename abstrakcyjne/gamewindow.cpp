@@ -14,7 +14,7 @@
 class GameWindow {
 
 private:
-	
+
 	GameModel * gamemodel;
 	SDL_Window * window;
 	SDL_Renderer* renderer;
@@ -99,15 +99,15 @@ public:
 	{
 		int hpWidth = 0;
 		int mpWidth = 0;
-		if(gamemodel->getHero()->getMAX_HP() != 0)
+		if (gamemodel->getHero()->getMAX_HP() != 0)
 			hpWidth = gamemodel->getHero()->getCURRENT_HP() / gamemodel->getHero()->getMAX_HP() * 400;
 		drawRectangle(20, 700, hpWidth, 20, 255, 0, 0);
-		if(gamemodel->getHero()->getMAX_MP()!= 0)
-			 mpWidth = gamemodel->getHero()->getCURRENT_MP() / gamemodel->getHero()->getMAX_MP() * 400;
+		if (gamemodel->getHero()->getMAX_MP() != 0)
+			mpWidth = gamemodel->getHero()->getCURRENT_MP() / gamemodel->getHero()->getMAX_MP() * 400;
 		drawRectangle(20, 722, mpWidth, 20, 255, 0, 0);
 	}
-	
-	GameWindow(GameModel * gamemodel) :gamemodel(gamemodel),window(NULL), renderer(NULL) {
+
+	GameWindow(GameModel * gamemodel) :gamemodel(gamemodel), window(NULL), renderer(NULL) {
 		int flags = SDL_WINDOW_SHOWN;
 
 		if (SDL_Init(SDL_INIT_EVERYTHING)) { return; }
@@ -116,7 +116,7 @@ public:
 		int initted = IMG_Init(img_flags);
 		if ((initted&img_flags) != img_flags) {
 			printf("IMG_Init: %s\n", IMG_GetError());
-		} 
+		}
 		if (SDL_CreateWindowAndRenderer(DISPLAY_WIDTH, DISPLAY_HEIGHT, flags, &window, &renderer)) { return; }
 		textureholder = new TextureHolder(renderer);
 	}
@@ -131,14 +131,6 @@ public:
 
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
-
-		/*drawRectangle(33, 66, 33, 33, 255, 123, 255);
-		drawRectangle(66, 66, 33, 33, 168, 142, 163);
-		drawRectangle(99, 66, 33, 33, 0, 255, 255);
-
-		drawTexture(33, 33, 33, 33, "spell.jpg");
-		drawTexture(66, 33, 33, 33, "warrior.png");
-		drawTexture(99, 33, 33, 33, "s.png");*/
 
 		drawMap();
 		drawHero();
@@ -159,18 +151,15 @@ public:
 		{
 			gamemodel->getHero()->move(NORTH);
 		}
-
-		if (PressedKeys[SDLK_a] == 1 && checkMove(WEST))
+		else 		if (PressedKeys[SDLK_a] == 1 && checkMove(WEST))
 		{
 			gamemodel->getHero()->move(WEST);
 		}
-
-		if (PressedKeys[SDLK_s] == 1 && checkMove(SOUTH))
+		else		if (PressedKeys[SDLK_s] == 1 && checkMove(SOUTH))
 		{
 			gamemodel->getHero()->move(SOUTH);
 		}
-
-		if (PressedKeys[SDLK_d] == 1 && checkMove(EAST))
+		else		if (PressedKeys[SDLK_d] == 1 && checkMove(EAST))
 		{
 			gamemodel->getHero()->move(EAST);
 		}
@@ -204,7 +193,7 @@ public:
 				frames = 0;
 				lastFpsUpdate = lastDraw;
 			}
-			if (now - lastDraw >= 1000/FPS) {
+			if (now - lastDraw >= 1000 / FPS) {
 				lastDraw = SDL_GetTicks();
 				draw();
 				frames++;
