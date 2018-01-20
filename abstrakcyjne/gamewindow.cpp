@@ -49,6 +49,7 @@ public:
 		case SOUTH:
 			return gamemodel->getFieldHolder()->getField(currX, currY - 1)->CanBeStepped();
 		}
+		return false;
 	}
 
 	void drawTexture(int x, int y, int w, int h, string texturename) {
@@ -75,7 +76,7 @@ public:
 	void drawMap() {
 		Hero * hero = gamemodel->getHero();
 		FieldHolder * fieldholder = gamemodel->getFieldHolder();
-		cout << "herox: " << hero->getX() << endl;
+		//cout << "herox: " << hero->getX() << endl;
 
 		for (int x = hero->getX() - 5; x <= hero->getX() + 5; x++) {
 			for (int y = hero->getY() - 5; y <= hero->getY() + 5; y++) {
@@ -93,14 +94,24 @@ public:
 		Hero * hero = gamemodel->getHero();
 		drawTexture(310, 310, FIELD_SIZE, FIELD_SIZE, hero->getFilename());
 	}
+
+	void drawHpMpBars()
+	{
+		int hpWidth = 0;
+		int mpWidth = 0;
+		if(gamemodel->getHero()->getMAX_HP() != 0)
+			hpWidth = gamemodel->getHero()->getCURRENT_HP() / gamemodel->getHero()->getMAX_HP() * 400;
+		drawRectangle(20, 700, hpWidth, 20, 255, 0, 0);
+		if(gamemodel->getHero()->getMAX_MP()!= 0)
+			 mpWidth = gamemodel->getHero()->getCURRENT_MP() / gamemodel->getHero()->getMAX_MP() * 400;
+		drawRectangle(20, 722, mpWidth, 20, 255, 0, 0);
+	}
 	
 	GameWindow(GameModel * gamemodel) :gamemodel(gamemodel),window(NULL), renderer(NULL) {
 		int flags = SDL_WINDOW_SHOWN;
 
 		if (SDL_Init(SDL_INIT_EVERYTHING)) { return; }
 		int img_flags = IMG_INIT_PNG || IMG_INIT_JPG;
-		//int img_flags = IMG_INIT_JPG;
-		//int img_flags = IMG_INIT_PNG;
 
 		int initted = IMG_Init(img_flags);
 		if ((initted&img_flags) != img_flags) {
@@ -131,6 +142,7 @@ public:
 
 		drawMap();
 		drawHero();
+		drawHpMpBars();
 
 		SDL_RenderPresent(renderer);
 	}
