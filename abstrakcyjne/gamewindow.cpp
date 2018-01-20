@@ -151,15 +151,15 @@ public:
 		{
 			gamemodel->getHero()->move(NORTH);
 		}
-		else 		if (PressedKeys[SDLK_a] == 1 && checkMove(WEST))
+		else if (PressedKeys[SDLK_a] == 1 && checkMove(WEST))
 		{
 			gamemodel->getHero()->move(WEST);
 		}
-		else		if (PressedKeys[SDLK_s] == 1 && checkMove(SOUTH))
+		else if (PressedKeys[SDLK_s] == 1 && checkMove(SOUTH))
 		{
 			gamemodel->getHero()->move(SOUTH);
 		}
-		else		if (PressedKeys[SDLK_d] == 1 && checkMove(EAST))
+		else if (PressedKeys[SDLK_d] == 1 && checkMove(EAST))
 		{
 			gamemodel->getHero()->move(EAST);
 		}
