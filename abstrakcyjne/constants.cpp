@@ -1,5 +1,3 @@
-
-
 enum {
 	DISPLAY_WIDTH = 1024,
 	DISPLAY_HEIGHT = 768,

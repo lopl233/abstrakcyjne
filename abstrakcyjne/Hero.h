@@ -1,13 +1,6 @@
 #pragma once
 #include <string>
-
-enum Direction {
-	WEST,
-	NORTH,
-	EAST,
-	SOUTH
-};
-
+#include "Direction.h"
 
 class Hero
 {
@@ -32,21 +25,21 @@ protected:
 public:
 	~Hero();
 	virtual int getMAX_HP() { return maxHp; }
-	virtual void setMAX_HP(int MAX_HP) { maxHp = MAX_HP; }
+	virtual void setMAX_HP(const int MAX_HP) { maxHp = MAX_HP; }
 	virtual int getCURRENT_HP() { return currentHp; }
-	virtual void setCURRENT_HP(int CURRENT_HP) { currentHp = CURRENT_HP; }
+	virtual void setCURRENT_HP(const int CURRENT_HP) { currentHp = CURRENT_HP; }
 	virtual int getMAX_MP() { return maxMp; }
-	virtual void setMAX_MP(int MAX_MP) { maxHp = MAX_MP; }
+	virtual void setMAX_MP(const int MAX_MP) { maxHp = MAX_MP; }
 	virtual int getCURRENT_MP() { return currentMp; }
-	virtual void setCURRENT_MP(int CURRENT_MP) { currentMp = CURRENT_MP; }
+	virtual void setCURRENT_MP(const int CURRENT_MP) { currentMp = CURRENT_MP; }
 	virtual int getEXP() { return exp; }
 	virtual int getNEXTLVLEXP() { return next_lvl_exp; }
 	virtual int getLVL() { return lvl; }
 	virtual int getX() { return x; }
 	virtual int getY() { return y; }
-	virtual void addHP(int val) { currentHp += val; if (currentHp > maxHp) currentHp = maxHp;}
-	virtual void addMP(int val) { currentMp += val; if (currentMp > maxMp) currentMp = maxMp; }
-	virtual void addExp(int EXP) {
+	virtual void addHP(const int val) { currentHp += val; if (currentHp > maxHp) currentHp = maxHp;}
+	virtual void addMP(const int val) { currentMp += val; if (currentMp > maxMp) currentMp = maxMp; }
+	virtual void addExp(const int EXP) {
 		exp += EXP;
 		while (exp >= next_lvl_exp) {
 			exp = -next_lvl_exp;
@@ -58,5 +51,23 @@ public:
 	virtual std::string getFilename()
 	{
 		return filename;
+	}
+	virtual void move(const Direction d)
+	{
+		switch (d)
+		{
+		case NORTH:
+			y++;
+			break;
+		case WEST:
+			x++;
+			break;
+		case EAST:
+			x--;
+			break;
+		case SOUTH:
+			y--;
+			break;
+		}
 	}
 };

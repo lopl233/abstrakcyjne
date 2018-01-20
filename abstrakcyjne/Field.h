@@ -12,6 +12,10 @@ public:
 	{
 		return filename;
 	}
+	virtual bool CanBeStepped()
+	{
+		return canBeSteped;
+	}
 	virtual ~Field() = 0;
 };
 

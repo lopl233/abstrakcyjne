@@ -18,17 +18,37 @@ private:
 	GameModel * gamemodel;
 	SDL_Window * window;
 	SDL_Renderer* renderer;
-	std::map<int, int> PressedKeys;
+	map<int, int> PressedKeys;
 	bool running = true;
 	TextureHolder * textureholder;
+	int now;
+	int lastMove;
 
 public:
 	void onKeyDown(SDL_Event* evt) {
 		PressedKeys[evt->key.keysym.sym] = 1;
+		checkKeysAndMove();
 	}
 
 	void onKeyUp(SDL_Event* evt) {
 		PressedKeys[evt->key.keysym.sym] = 0;
+	}
+
+	bool checkMove(const Direction d)
+	{
+		auto currX = gamemodel->getHero()->getX();
+		auto currY = gamemodel->getHero()->getY();
+		switch (d)
+		{
+		case NORTH:
+			return gamemodel->getFieldHolder()->getField(currX, currY + 1)->CanBeStepped();
+		case WEST:
+			return gamemodel->getFieldHolder()->getField(currX + 1, currY)->CanBeStepped();
+		case EAST:
+			return gamemodel->getFieldHolder()->getField(currX - 1, currY)->CanBeStepped();
+		case SOUTH:
+			return gamemodel->getFieldHolder()->getField(currX, currY - 1)->CanBeStepped();
+		}
 	}
 
 	void drawTexture(int x, int y, int w, int h, string texturename) {
@@ -55,15 +75,18 @@ public:
 	void drawMap() {
 		Hero * hero = gamemodel->getHero();
 		FieldHolder * fieldholder = gamemodel->getFieldHolder();
-		for(int x = hero->getX() - 5; x<= hero->getX() + 5; x++)
+		cout << "herox: " << hero->getX() << endl;
+
+		for (int x = hero->getX() - 5; x <= hero->getX() + 5; x++) {
 			for (int y = hero->getY() - 5; y <= hero->getY() + 5; y++) {
 				drawTexture((
-					hero->getX() - x) * FIELD_SIZE + 310, 
-					(hero->getY() - y) * FIELD_SIZE + 310, 
-					FIELD_SIZE, 
-					FIELD_SIZE, 
-					fieldholder->getField(x,y)->getFilename() );
+					hero->getX() - x) * FIELD_SIZE + 310,
+					(hero->getY() - y) * FIELD_SIZE + 310,
+					FIELD_SIZE,
+					FIELD_SIZE,
+					fieldholder->getField(x, y)->getFilename());
 			}
+		}
 	}
 
 	void drawHero() {
@@ -112,12 +135,42 @@ public:
 		SDL_RenderPresent(renderer);
 	}
 
+	void checkKeysAndMove()
+	{
+		if (now - lastMove < 500)
+		{
+			return;
+		}
+		lastMove = SDL_GetTicks();
+
+		if (PressedKeys[SDLK_w] == 1 && checkMove(NORTH))
+		{
+			gamemodel->getHero()->move(NORTH);
+		}
+
+		if (PressedKeys[SDLK_a] == 1 && checkMove(WEST))
+		{
+			gamemodel->getHero()->move(WEST);
+		}
+
+		if (PressedKeys[SDLK_s] == 1 && checkMove(SOUTH))
+		{
+			gamemodel->getHero()->move(SOUTH);
+		}
+
+		if (PressedKeys[SDLK_d] == 1 && checkMove(EAST))
+		{
+			gamemodel->getHero()->move(EAST);
+		}
+	}
+
 	void run() {
 		SDL_Event event;
 		int lastDraw = SDL_GetTicks();
-		int now;
 		int frames = 0;
 		int lastFpsUpdate = 0;
+		lastMove = 0;
+
 		char szFps[128];
 		while (running) {
 			//Obs³uga eventów, w tym wcisakania klawiszy
@@ -131,18 +184,18 @@ public:
 
 			//sprawdzamy czy od ostatniej klatki mine³o doœæ czasu, je¿eli tak to j¹ generujemy
 			now = SDL_GetTicks();
+
+
 			if (now - lastFpsUpdate >= 1000) {
 				sprintf_s(szFps, "FPS: %d FPS", frames);
 				SDL_SetWindowTitle(window, szFps);
 				frames = 0;
 				lastFpsUpdate = lastDraw;
 			}
-			//test();
 			if (now - lastDraw >= 1000/FPS) {
 				lastDraw = SDL_GetTicks();
 				draw();
 				frames++;
-				
 			}
 
 		}
