@@ -14,7 +14,7 @@ private:
 public:
 	GameModel();
 	~GameModel();
-	Hero * getHero() { return hero; }
-	FieldHolder * getFieldHolder() { return fieldholder; }
+	Hero * getHero() const { return hero; }
+	FieldHolder * getFieldHolder() const { return fieldholder; }
 };
 

@@ -8,6 +8,10 @@ WallField::WallField()
 	canBeSteped = false;
 }
 
+void WallField::AddMonster(Monster* monster)
+{
+}
+
 WallField::~WallField()
 {
 }

@@ -5,6 +5,7 @@ class WallField :
 {
 public:
 	WallField();
+	void AddMonster(Monster* monster) override;
 	~WallField();
 };
 

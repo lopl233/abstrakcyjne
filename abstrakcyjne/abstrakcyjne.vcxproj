@@ -133,8 +133,11 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameModel.cpp" />
     <ClCompile Include="gamewindow.cpp" />
+    <ClCompile Include="Griffin.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="Ladybug.cpp" />
     <ClCompile Include="RandomFieldGenerator.cpp" />
+    <ClCompile Include="RandomMonsterGenerator.cpp" />
     <ClCompile Include="SandField.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextureHolder.cpp" />
@@ -150,7 +153,10 @@
     <ClInclude Include="FieldHolder.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameModel.h" />
+    <ClInclude Include="Griffin.h" />
+    <ClInclude Include="Ladybug.h" />
     <ClInclude Include="RandomFieldGenerator.h" />
+    <ClInclude Include="RandomMonsterGenerator.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="ForestField.h" />
     <ClInclude Include="Monster.h" />

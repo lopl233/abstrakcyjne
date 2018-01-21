@@ -23,7 +23,7 @@ protected:
 	Hero(int maxHp, int maxMp, std::string filename);
 
 public:
-	~Hero();
+	virtual ~Hero();
 	virtual int getMAX_HP() { return maxHp; }
 	virtual void setMAX_HP(const int MAX_HP) { maxHp = MAX_HP; }
 	virtual int getCURRENT_HP() { return currentHp; }

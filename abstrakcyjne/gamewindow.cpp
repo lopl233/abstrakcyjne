@@ -1,7 +1,6 @@
 #include <SDL.h> 
 #include <SDL_image.h>
 
-#include <iostream>
 #include <cstdio>
 #include <map>  
 #include <string>
@@ -36,8 +35,8 @@ public:
 
 	bool checkMove(const Direction d)
 	{
-		auto currX = gamemodel->getHero()->getX();
-		auto currY = gamemodel->getHero()->getY();
+		const auto currX = gamemodel->getHero()->getX();
+		const auto currY = gamemodel->getHero()->getY();
 		switch (d)
 		{
 		case NORTH:
@@ -76,8 +75,6 @@ public:
 	void drawMap() {
 		Hero * hero = gamemodel->getHero();
 		FieldHolder * fieldholder = gamemodel->getFieldHolder();
-		//cout << "herox: " << hero->getX() << endl;
-
 		for (int x = hero->getX() - 5; x <= hero->getX() + 5; x++) {
 			for (int y = hero->getY() - 5; y <= hero->getY() + 5; y++) {
 				drawTexture((
@@ -86,6 +83,16 @@ public:
 					FIELD_SIZE,
 					FIELD_SIZE,
 					fieldholder->getField(x, y)->getFilename());
+				Monster* m = fieldholder->getField(x, y)->GetMonster();
+				if(m != nullptr)
+				{
+					drawTexture((
+						hero->getX() - x) * FIELD_SIZE + 310,
+						(hero->getY() - y) * FIELD_SIZE + 310,
+						FIELD_SIZE,
+						FIELD_SIZE,
+						m->getFilename());
+				}
 			}
 		}
 	}

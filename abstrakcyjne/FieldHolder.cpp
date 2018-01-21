@@ -2,6 +2,7 @@
 #include "FieldHolder.h"
 #include "RandomFieldGenerator.h"
 #include "WallField.h"
+#include "RandomMonsterGenerator.h"
 
 FieldHolder::FieldHolder(const int size)
 {
@@ -18,6 +19,17 @@ FieldHolder::FieldHolder(const int size)
 			{
 				(*fields)[i][j] = RandomFieldGenerator::GetRandomField();
 			}
+		}
+	}
+}
+
+FieldHolder::FieldHolder(const int size, const double prob) : FieldHolder(size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			(*fields)[i][j]->AddMonster(RandomMonsterGenerator::GetRandomMonster(prob));
 		}
 	}
 }

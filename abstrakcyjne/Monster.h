@@ -1,10 +1,37 @@
 #pragma once
-class Monster {
-	virtual int getMaxHp() = 0;
+#include <string>
 
-	virtual int getCurrHp() = 0;
+class Monster {
+public:
+	virtual ~Monster() = default;
+
+	virtual int getMaxHp()
+	{
+		return maxHp;
+	}
+
+	virtual int getCurrHp()
+	{
+		return currentHp;
+	}
+
+	virtual int getLevel()
+	{
+		return level;
+	}
+
+	virtual std::string getFilename()
+	{
+		return filename;
+	}
 
 	virtual int getAtkVal() = 0;
 
-	virtual void addHp(int hp) = 0;
+protected:
+	Monster(int maxHP, int lvl, std::string filename) : maxHp(maxHP), currentHp(maxHP), filename(filename){}
+private:
+	int maxHp;
+	int currentHp;
+	int level;
+	std::string filename;
 };
