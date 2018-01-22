@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 #include "Monster.h"
+#include <memory>
 
 class RandomMonsterGenerator
 {
@@ -14,7 +15,7 @@ private:
 	}
 public:
 	RandomMonsterGenerator();
-	static Monster* GetRandomMonster(double prob);
+	static std::shared_ptr<Monster> GetRandomMonster(double prob);
 	~RandomMonsterGenerator();
 };
 

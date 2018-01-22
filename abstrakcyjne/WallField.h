@@ -5,7 +5,7 @@ class WallField :
 {
 public:
 	WallField();
-	void AddMonster(Monster* monster) override;
+	void AddMonster(std::shared_ptr<Monster> monster) override;
 	~WallField();
 };
 

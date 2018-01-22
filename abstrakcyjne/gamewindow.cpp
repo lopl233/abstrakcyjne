@@ -133,7 +133,7 @@ public:
 					FIELD_SIZE,
 					FIELD_SIZE,
 					fieldholder->getField(x, y)->getFilename());
-				Monster* m = fieldholder->getField(x, y)->GetMonster();
+				auto m = fieldholder->getField(x, y)->GetMonster();
 				if(m != nullptr)
 				{
 					drawTexture(

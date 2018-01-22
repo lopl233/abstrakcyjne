@@ -1,13 +1,14 @@
 #pragma once
 #include <string>
 #include "Monster.h"
+#include <memory>
 
 class Field
 {
 protected:
 	std::string filename;
 	bool canBeSteped;
-	Monster* monster = nullptr;
+	std::shared_ptr<Monster> monster = nullptr;
 public:
 	Field();
 	virtual std::string getFilename()
@@ -18,11 +19,11 @@ public:
 	{
 		return canBeSteped;
 	}
-	virtual Monster* GetMonster()
+	virtual std::shared_ptr<Monster> GetMonster()
 	{
 		return monster;
 	}
-	virtual void AddMonster(Monster* monster)
+	virtual void AddMonster(const std::shared_ptr<Monster> monster)
 	{
 		this->monster = monster;
 	}
