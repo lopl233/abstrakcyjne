@@ -1,6 +1,9 @@
 #pragma once
 #include "Event.h"
 #include <iostream>
+#include "Hero.h"
+#include "GameModel.h"
+
 class AddHpEvent :
 	public Event
 {

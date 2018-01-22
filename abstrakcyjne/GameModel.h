@@ -18,6 +18,6 @@ public:
 	~GameModel();
 	Hero * getHero() const { return hero; }
 	FieldHolder * getFieldHolder() const { return fieldholder; }
-	EventQ * getEventQ() { return eventQ; }
+	EventQ * getEventQ() const { return eventQ; }
 };
 

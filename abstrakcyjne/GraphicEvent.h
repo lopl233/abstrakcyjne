@@ -10,7 +10,7 @@ private:
 
 public:
 	GraphicEvent();
-	~GraphicEvent();
+	virtual ~GraphicEvent();
 
 	virtual double getX(int now) = 0;
 	virtual double getY(int now) = 0;

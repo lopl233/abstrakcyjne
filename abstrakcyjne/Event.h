@@ -1,8 +1,8 @@
 #pragma once
-#include "GameModel.h"
 #include "GraphicEventQ.h"
 #include <string>
 
+class GameModel;
 class Event
 {
 protected:
@@ -12,7 +12,7 @@ protected:
 	int processingTime;
 
 public:
-	Event(GameModel *gamemodel, GraphicEventQ * graphiceventq, int processtime);
+	Event(GameModel* gamemodel, GraphicEventQ * graphiceventq, int processtime);
 	virtual ~Event();
 	virtual std::string getEventType(){ return eventType; }
 	virtual void processEvent() = 0;
