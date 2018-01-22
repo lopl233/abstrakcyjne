@@ -11,7 +11,7 @@ FieldHolder::FieldHolder(const int size)
 	{
 		for (int j = 0; j < size; j++)
 		{
-			if(i < 5 || j < 5 || i >= size - 5 || j >= size - 5)
+			if(i < 6 || j < 6 || i >= size - 6 || j >= size - 6)
 			{
 				(*fields)[i][j] = new WallField();
 			}

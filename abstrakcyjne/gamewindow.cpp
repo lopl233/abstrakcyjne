@@ -10,6 +10,9 @@
 #include "constants.cpp"
 #include "TextureHolder.cpp"
 #include "GameModel.h"
+#include "GraphicEvent.h"
+#include "GraphicEventQ.h"
+#include "PointToPointEvent.h"
 
 
 class GameWindow {
@@ -22,6 +25,7 @@ private:
 	map<int, int> PressedKeys;
 	bool running = true;
 	TextureHolder * textureholder;
+	GraphicEventQ graphiceventq;
 	int now;
 	int lastMove;
 	int lastMoveSuccess;
@@ -74,14 +78,6 @@ public:
 			SDL_RenderCopyEx(renderer, texture, NULL, &destination,angle , &center, SDL_FLIP_NONE);
 		}
 
-
-		//SDL_RenderCopy(	)
-		//SDL_RenderCopyEx(,, angle, &center, flip);
-		//center.x = textureRect.w / 2;
-		//center.y = textureRect.h / 2;
-		//SDL_Point center;
-
-
 	}
 
 	void drawRectangle(int x, int y, int w, int h, int r, int g, int b) {
@@ -129,18 +125,18 @@ public:
 		FieldHolder * fieldholder = gamemodel->getFieldHolder();
 		for (int x = hero->getX() - 6; x <= hero->getX() + 6; x++) {
 			for (int y = hero->getY() - 6; y <= hero->getY() + 6; y++) {
-				drawTexture((
-					getMovingX() - x) * FIELD_SIZE + 310,
-					(getMovingY() - y) * FIELD_SIZE + 310,
+				drawTexture(
+					(int)((getMovingX() - x) * FIELD_SIZE) + 310,
+					(int)((getMovingY() - y) * FIELD_SIZE) + 310,
 					FIELD_SIZE,
 					FIELD_SIZE,
 					fieldholder->getField(x, y)->getFilename());
 				Monster* m = fieldholder->getField(x, y)->GetMonster();
 				if(m != nullptr)
 				{
-					drawTexture((
-						getMovingX() - x) * FIELD_SIZE + 310,
-						(getMovingY() - y) * FIELD_SIZE + 310,
+					drawTexture(
+						(int)((getMovingX() - x) * FIELD_SIZE) + 310,
+						(int)((getMovingY() - y) * FIELD_SIZE) + 310,
 						FIELD_SIZE,
 						FIELD_SIZE,
 						m->getFilename());
@@ -159,10 +155,10 @@ public:
 	}
 
 	void drawInterface() {
-		drawRectangle(0, 0, 10, 700, 255, 255, 255);
+		drawRectangle(0, 0, 10, 768, 255, 255, 255);
 		drawRectangle(0, 0, 1024, 10, 255, 255, 255);
 		drawRectangle(0, 670 , 1024, 130, 255, 255, 255);
-		drawRectangle(670, 0, 130, 700, 255, 255, 255);
+		drawRectangle(670, 0, 1024, 768, 255, 255, 255);
 		drawHpMpBars();
 
 	}
@@ -181,6 +177,24 @@ public:
 			drawRectangle(720, 32, mpWidth, 20, 255, 0, 0);
 			drawTexture(700, 32, 30, 20, "MP.png");
 		}
+	}
+
+	void drawGraphicEvent(GraphicEvent *event) {
+		int x = (int)(( getMovingX() - event->getX(now)) * FIELD_SIZE + 310);
+		int y = (int)(( getMovingY() - event->getY(now)) * FIELD_SIZE + 310);
+
+		drawTexture(x, y, event->getSize(now), event->getSize(now), event->getTextureName(),event->getAngle(now));
+	}
+
+	void drawAllEvents() {
+
+		graphiceventq.removeOldEvents(now);
+		for (auto it = graphiceventq.begin(); it != graphiceventq.end(); it++) {
+			if ((*it)->getStartTime() < now)
+				drawGraphicEvent(*it);
+
+		}
+		
 	}
 
 	GameWindow(GameModel * gamemodel) :gamemodel(gamemodel), window(NULL), renderer(NULL) {
@@ -210,6 +224,7 @@ public:
 
 		drawMap();
 		drawHero();
+		drawAllEvents();
 		drawInterface();
 
 		SDL_RenderPresent(renderer);
@@ -251,6 +266,10 @@ public:
 		int frames = 0;
 		int lastFpsUpdate = 0;
 		lastMove = 0;
+
+		graphiceventq.addEvent(new PointToPointEvent(SDL_GetTicks(), SDL_GetTicks()+3000, 18, 17, 23, 23, "fireball.png"));
+		graphiceventq.addEvent(new PointToPointEvent(SDL_GetTicks()+ 2000, SDL_GetTicks() + 5000, 20, 20, 20, 17, "fireball.png"));
+		graphiceventq.addEvent(new PointToPointEvent(SDL_GetTicks() +2500, SDL_GetTicks() + 4000, 16, 23, 18, 20, "fireball.png"));
 
 		char szFps[128];
 		while (running) {

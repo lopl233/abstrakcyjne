@@ -6,7 +6,7 @@
 
 GameModel::GameModel()
 {
-	fieldholder = new FieldHolder(MAP_SIZE, 0.1);
+	fieldholder = new FieldHolder(MAP_SIZE, 0.03);
 	hero = new Warrior();
 }
 

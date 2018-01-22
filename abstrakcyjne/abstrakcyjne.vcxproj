@@ -129,10 +129,13 @@
     <ClCompile Include="constants.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldHolder.cpp" />
+    <ClCompile Include="GraphicEventQ.cpp" />
+    <ClCompile Include="PointToPointEvent.cpp" />
     <ClCompile Include="ForestField.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameModel.cpp" />
     <ClCompile Include="gamewindow.cpp" />
+    <ClCompile Include="GraphicEvent.cpp" />
     <ClCompile Include="Griffin.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Ladybug.cpp" />
@@ -151,8 +154,11 @@
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldHolder.h" />
+    <ClInclude Include="GraphicEventQ.h" />
+    <ClInclude Include="PointToPointEvent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameModel.h" />
+    <ClInclude Include="GraphicEvent.h" />
     <ClInclude Include="Griffin.h" />
     <ClInclude Include="Ladybug.h" />
     <ClInclude Include="RandomFieldGenerator.h" />
