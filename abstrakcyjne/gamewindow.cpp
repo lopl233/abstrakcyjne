@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <map>  
 #include <string>
+#include <math.h>
+#include <iostream>
 
 #include "constants.cpp"
 #include "TextureHolder.cpp"
@@ -22,6 +24,7 @@ private:
 	TextureHolder * textureholder;
 	int now;
 	int lastMove;
+	int lastMoveSuccess;
 
 public:
 	void onKeyDown(SDL_Event* evt) {
@@ -51,7 +54,7 @@ public:
 		return false;
 	}
 
-	void drawTexture(int x, int y, int w, int h, string texturename) {
+	void drawTexture(int x, int y, int w, int h, string texturename, int angle = 0) {
 		SDL_Rect destination;
 		destination.x = x;
 		destination.y = y;
@@ -59,7 +62,26 @@ public:
 		destination.h = h;
 
 		SDL_Texture* texture = textureholder->getTexture(texturename);
-		SDL_RenderCopy(renderer, texture, NULL, &destination);
+
+		if (angle == 0) {
+			SDL_RenderCopy(renderer, texture, NULL, &destination);
+		}
+		else
+		{
+			SDL_Point center;
+			center.x = w / 2;
+			center.y = h / 2;
+			SDL_RenderCopyEx(renderer, texture, NULL, &destination,angle , &center, SDL_FLIP_NONE);
+		}
+
+
+		//SDL_RenderCopy(	)
+		//SDL_RenderCopyEx(,, angle, &center, flip);
+		//center.x = textureRect.w / 2;
+		//center.y = textureRect.h / 2;
+		//SDL_Point center;
+
+
 	}
 
 	void drawRectangle(int x, int y, int w, int h, int r, int g, int b) {
@@ -72,14 +94,44 @@ public:
 		SDL_RenderFillRect(renderer, &kwadrat);
 	}
 
+	double getMovingX() {
+
+
+		Hero * hero = gamemodel->getHero();
+		Direction direction = hero->getDirection();
+		double x = hero->getX();
+		if (direction == NORTH || direction == SOUTH)return x;
+		if (now - lastMoveSuccess > 500)return x;
+
+
+		if (direction == WEST)x -= 1 - ((double)(now - lastMoveSuccess) / 500);
+		else x += 1 - ((double)(now - lastMoveSuccess) / 500);
+
+		return x;
+	}
+
+	double getMovingY() {
+
+		Hero * hero = gamemodel->getHero();
+		Direction direction = hero->getDirection();
+		double y = hero->getY();
+		if (direction == WEST || direction == EAST)return y;
+		if (now - lastMoveSuccess > 500)return y;
+
+		if (direction == NORTH)y -= 1 -( (double)(now - lastMoveSuccess) / 500);
+		else y += 1 - ((double)(now - lastMoveSuccess) / 500);
+
+		return y;
+	}
+
 	void drawMap() {
 		Hero * hero = gamemodel->getHero();
 		FieldHolder * fieldholder = gamemodel->getFieldHolder();
-		for (int x = hero->getX() - 5; x <= hero->getX() + 5; x++) {
-			for (int y = hero->getY() - 5; y <= hero->getY() + 5; y++) {
+		for (int x = hero->getX() - 6; x <= hero->getX() + 6; x++) {
+			for (int y = hero->getY() - 6; y <= hero->getY() + 6; y++) {
 				drawTexture((
-					hero->getX() - x) * FIELD_SIZE + 310,
-					(hero->getY() - y) * FIELD_SIZE + 310,
+					getMovingX() - x) * FIELD_SIZE + 310,
+					(getMovingY() - y) * FIELD_SIZE + 310,
 					FIELD_SIZE,
 					FIELD_SIZE,
 					fieldholder->getField(x, y)->getFilename());
@@ -87,8 +139,8 @@ public:
 				if(m != nullptr)
 				{
 					drawTexture((
-						hero->getX() - x) * FIELD_SIZE + 310,
-						(hero->getY() - y) * FIELD_SIZE + 310,
+						getMovingX() - x) * FIELD_SIZE + 310,
+						(getMovingY() - y) * FIELD_SIZE + 310,
 						FIELD_SIZE,
 						FIELD_SIZE,
 						m->getFilename());
@@ -99,19 +151,36 @@ public:
 
 	void drawHero() {
 		Hero * hero = gamemodel->getHero();
-		drawTexture(310, 310, FIELD_SIZE, FIELD_SIZE, hero->getFilename());
+		int angle = 0;
+		if (hero->getDirection() == EAST) { angle = 90; }
+		else if (hero->getDirection() == SOUTH) { angle = 180; }
+		else if (hero->getDirection() == WEST) { angle = 270; }
+		drawTexture(310, 310, FIELD_SIZE, FIELD_SIZE, hero->getFilename(),angle);
+	}
+
+	void drawInterface() {
+		drawRectangle(0, 0, 10, 700, 255, 255, 255);
+		drawRectangle(0, 0, 1024, 10, 255, 255, 255);
+		drawRectangle(0, 670 , 1024, 130, 255, 255, 255);
+		drawRectangle(670, 0, 130, 700, 255, 255, 255);
+		drawHpMpBars();
+
 	}
 
 	void drawHpMpBars()
 	{
 		int hpWidth = 0;
 		int mpWidth = 0;
-		if (gamemodel->getHero()->getMAX_HP() != 0)
-			hpWidth = gamemodel->getHero()->getCURRENT_HP() / gamemodel->getHero()->getMAX_HP() * 400;
-		drawRectangle(20, 700, hpWidth, 20, 255, 0, 0);
-		if (gamemodel->getHero()->getMAX_MP() != 0)
-			mpWidth = gamemodel->getHero()->getCURRENT_MP() / gamemodel->getHero()->getMAX_MP() * 400;
-		drawRectangle(20, 722, mpWidth, 20, 255, 0, 0);
+		if (gamemodel->getHero()->getMAX_HP() != 0) {
+			hpWidth = gamemodel->getHero()->getCURRENT_HP() / gamemodel->getHero()->getMAX_HP() * 280;
+			drawRectangle(720, 12, hpWidth, 20, 255, 0, 0);
+			drawTexture(700, 12, 30, 20, "HP.png");
+		}
+		if (gamemodel->getHero()->getMAX_MP() != 0) {
+			mpWidth = gamemodel->getHero()->getCURRENT_MP() / gamemodel->getHero()->getMAX_MP() * 280;
+			drawRectangle(720, 32, mpWidth, 20, 255, 0, 0);
+			drawTexture(700, 32, 30, 20, "MP.png");
+		}
 	}
 
 	GameWindow(GameModel * gamemodel) :gamemodel(gamemodel), window(NULL), renderer(NULL) {
@@ -141,7 +210,7 @@ public:
 
 		drawMap();
 		drawHero();
-		drawHpMpBars();
+		drawInterface();
 
 		SDL_RenderPresent(renderer);
 	}
@@ -156,18 +225,22 @@ public:
 
 		if (PressedKeys[SDLK_w] == 1 && checkMove(NORTH))
 		{
+			lastMoveSuccess = lastMove;
 			gamemodel->getHero()->move(NORTH);
 		}
 		else if (PressedKeys[SDLK_a] == 1 && checkMove(WEST))
 		{
+			lastMoveSuccess = lastMove;
 			gamemodel->getHero()->move(WEST);
 		}
 		else if (PressedKeys[SDLK_s] == 1 && checkMove(SOUTH))
 		{
+			lastMoveSuccess = lastMove;
 			gamemodel->getHero()->move(SOUTH);
 		}
 		else if (PressedKeys[SDLK_d] == 1 && checkMove(EAST))
 		{
+			lastMoveSuccess = lastMove;
 			gamemodel->getHero()->move(EAST);
 		}
 	}
