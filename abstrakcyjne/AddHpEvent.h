@@ -12,7 +12,7 @@ public:
 		Hero * hero = gamemodel->getHero();
 		int maxhp = hero->getMAX_HP();
 		hero->addHP(maxhp * 0.05);
-		if (hero->getCURRENT_HP > maxhp)hero->setCURRENT_HP(maxhp);
+		if (hero->getCURRENT_HP() > maxhp)hero->setCURRENT_HP(maxhp);
 
 		std::cout << "Adding HP" << std::endl;
 
