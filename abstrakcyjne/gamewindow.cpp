@@ -13,6 +13,8 @@
 #include "GraphicEvent.h"
 #include "GraphicEventQ.h"
 #include "PointToPointEvent.h"
+#include "AddHpEvent.h"
+#include "Event.h"
 
 
 class GameWindow {
@@ -268,6 +270,8 @@ public:
 		lastMove = 0;
 		int x, y;
 
+		gamemodel->getEventQ()->addEvent(new AddHpEvent(gamemodel, &graphiceventq, 0));
+
 
 		char szFps[128];
 		while (running) {
@@ -283,6 +287,7 @@ public:
 			//sprawdzamy czy od ostatniej klatki mine³o doœæ czasu, je¿eli tak to j¹ generujemy
 			now = SDL_GetTicks();
 
+			gamemodel->getEventQ()->proccessQ(now);
 
 			if (now - lastFpsUpdate >= 1000) {
 				sprintf_s(szFps, "FPS: %d FPS", frames);
@@ -297,7 +302,7 @@ public:
 				if (x > 10 && x < 670 && y>10 && x < 670) {
 					int field_x = getMovingX() - 5 + ((x - 10) / FIELD_SIZE);
 					int field_y = getMovingY() - 5 + ((y - 10) / FIELD_SIZE);
-					cout << field_x << " " << field_y << endl;
+					//cout << field_x << " " << field_y << endl;
 				
 				}
 				frames++;

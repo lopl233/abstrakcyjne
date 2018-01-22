@@ -126,7 +126,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddHpEvent.cpp" />
     <ClCompile Include="constants.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventQ.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldHolder.cpp" />
     <ClCompile Include="GraphicEventQ.cpp" />
@@ -151,7 +154,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddHpEvent.h" />
     <ClInclude Include="Direction.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventQ.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldHolder.h" />
     <ClInclude Include="GraphicEventQ.h" />
