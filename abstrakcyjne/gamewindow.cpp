@@ -266,10 +266,8 @@ public:
 		int frames = 0;
 		int lastFpsUpdate = 0;
 		lastMove = 0;
+		int x, y;
 
-		graphiceventq.addEvent(new PointToPointEvent(SDL_GetTicks(), SDL_GetTicks()+3000, 18, 17, 23, 23, "fireball.png"));
-		graphiceventq.addEvent(new PointToPointEvent(SDL_GetTicks()+ 2000, SDL_GetTicks() + 5000, 20, 20, 20, 17, "fireball.png"));
-		graphiceventq.addEvent(new PointToPointEvent(SDL_GetTicks() +2500, SDL_GetTicks() + 4000, 16, 23, 18, 20, "fireball.png"));
 
 		char szFps[128];
 		while (running) {
@@ -295,6 +293,13 @@ public:
 			if (now - lastDraw >= 1000 / FPS) {
 				lastDraw = SDL_GetTicks();
 				draw();
+				SDL_GetMouseState(&x, &y);
+				if (x > 10 && x < 670 && y>10 && x < 670) {
+					int field_x = getMovingX() - 5 + ((x - 10) / FIELD_SIZE);
+					int field_y = getMovingY() - 5 + ((y - 10) / FIELD_SIZE);
+					cout << field_x << " " << field_y << endl;
+				
+				}
 				frames++;
 			}
 
