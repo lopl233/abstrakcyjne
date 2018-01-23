@@ -134,14 +134,24 @@ public:
 					FIELD_SIZE,
 					fieldholder->getField(x, y)->getFilename());
 				auto m = fieldholder->getField(x, y)->GetMonster();
+				auto p = fieldholder->getField(x, y)->GetPotion();
+				string filename = "";
 				if(m != nullptr)
+				{
+					filename = m->getFilename();
+				}
+				else if (p != nullptr)
+				{
+					filename = p->getFilename();
+				}
+				if(filename.compare("") != 0)
 				{
 					drawTexture(
 						(int)((getMovingX() - x) * FIELD_SIZE) + 310,
 						(int)((getMovingY() - y) * FIELD_SIZE) + 310,
 						FIELD_SIZE,
 						FIELD_SIZE,
-						m->getFilename());
+						filename);
 				}
 			}
 		}

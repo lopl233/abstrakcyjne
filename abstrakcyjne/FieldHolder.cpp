@@ -1,8 +1,12 @@
-
 #include "FieldHolder.h"
-#include "RandomFieldGenerator.h"
 #include "WallField.h"
-#include "RandomMonsterGenerator.h"
+#include "RandomGenerator.h"
+#include "ForestField.h"
+#include "SandField.h"
+#include "Griffin.h"
+#include "Ladybug.h"
+#include "HPPotion.h"
+#include "MPPotion.h"
 
 FieldHolder::FieldHolder(const int size)
 {
@@ -11,13 +15,14 @@ FieldHolder::FieldHolder(const int size)
 	{
 		for (int j = 0; j < size; j++)
 		{
-			if(i < 6 || j < 6 || i >= size - 6 || j >= size - 6)
+			if (i < 6 || j < 6 || i >= size - 6 || j >= size - 6)
 			{
 				(*fields)[i][j] = new WallField();
 			}
 			else
 			{
-				(*fields)[i][j] = RandomFieldGenerator::GetRandomField();
+				(*fields)[i][j] = GetRandom<Field, SandField, ForestField>()();
+
 			}
 		}
 	}
@@ -29,7 +34,11 @@ FieldHolder::FieldHolder(const int size, const double prob) : FieldHolder(size)
 	{
 		for (int j = 0; j < size; j++)
 		{
-			(*fields)[i][j]->AddMonster(RandomMonsterGenerator::GetRandomMonster(prob));
+			(*fields)[i][j]->AddMonster(GetRandom<Monster, Griffin, Ladybug>()(prob));
+			if ((*fields)[i][j]->GetMonster() == nullptr)
+			{
+				(*fields)[i][j]->AddPotion(GetRandom<Potion, HPPotion, MPPotion>()(prob));
+			}
 		}
 	}
 }

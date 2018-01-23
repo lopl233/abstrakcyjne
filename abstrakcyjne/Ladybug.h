@@ -4,6 +4,7 @@ class Ladybug :
 	public Monster
 {
 public:
+	Ladybug();
 	Ladybug(int maxHP, int lvl);
 	int getAtkVal() override;
 	~Ladybug();

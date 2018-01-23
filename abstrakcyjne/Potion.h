@@ -18,6 +18,12 @@ public:
 		return val;
 	}
 
+
+	virtual std::string getFilename()
+	{
+		return filename;
+	}
+
 	virtual ~Potion();
 };
 

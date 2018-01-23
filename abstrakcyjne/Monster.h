@@ -28,6 +28,7 @@ public:
 	virtual int getAtkVal() = 0;
 
 protected:
+	Monster() {}
 	Monster(int maxHP, int lvl, std::string filename) : maxHp(maxHP), currentHp(maxHP), filename(filename){}
 private:
 	int maxHp;

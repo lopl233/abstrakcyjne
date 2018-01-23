@@ -38,7 +38,7 @@ public:
 	virtual int getX() { return x; }
 	virtual int getY() { return y; }
 	virtual Direction getDirection() { return direction; }
-	virtual void addHP(const int val) { currentHp += val; if (currentHp > maxHp) currentHp = maxHp;}
+	virtual void addHP(const int val) { currentHp += val; if (currentHp > maxHp) currentHp = maxHp; }
 	virtual void addMP(const int val) { currentMp += val; if (currentMp > maxMp) currentMp = maxMp; }
 	virtual void addExp(const int EXP) {
 		exp += EXP;

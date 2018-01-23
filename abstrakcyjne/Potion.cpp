@@ -1,7 +1,7 @@
 #include "Potion.h"
 
 
-Potion::Potion(const std::string filename, PotionType pt) : filename(filename), potionType(pt)
+Potion::Potion(const std::string filename, const PotionType pt) : filename(filename), potionType(pt), val(5)
 {
 }
 

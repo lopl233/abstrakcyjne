@@ -145,8 +145,6 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Ladybug.cpp" />
     <ClCompile Include="Potion.cpp" />
-    <ClCompile Include="RandomFieldGenerator.cpp" />
-    <ClCompile Include="RandomMonsterGenerator.cpp" />
     <ClCompile Include="SandField.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextureHolder.cpp" />
@@ -174,8 +172,7 @@
     <ClInclude Include="Ladybug.h" />
     <ClInclude Include="Potion.h" />
     <ClInclude Include="PotionType.h" />
-    <ClInclude Include="RandomFieldGenerator.h" />
-    <ClInclude Include="RandomMonsterGenerator.h" />
+    <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="ForestField.h" />
     <ClInclude Include="Monster.h" />
