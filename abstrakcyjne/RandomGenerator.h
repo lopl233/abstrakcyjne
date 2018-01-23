@@ -13,7 +13,8 @@ public:
 	}
 };
 
-template<typename T, typename K1, typename K2> struct GetRandom
+template<typename T, typename K1, typename K2> 
+struct GetRandom
 {
 	std::shared_ptr<T> operator()(const double prob)
 	{
@@ -31,7 +32,8 @@ template<typename T, typename K1, typename K2> struct GetRandom
 	}
 };
 
-template<typename K1, typename K2> struct GetRandom<Field, K1, K2>
+template<typename K1, typename K2> 
+struct GetRandom<Field, K1, K2>
 {
 	Field* operator()(const double prob = 1.0) const
 	{

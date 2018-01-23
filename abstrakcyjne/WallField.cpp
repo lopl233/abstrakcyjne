@@ -12,6 +12,10 @@ void WallField::AddMonster(std::shared_ptr<Monster> monster)
 {
 }
 
+void WallField::AddPotion(std::shared_ptr<Potion>)
+{
+}
+
 WallField::~WallField()
 {
 }
