@@ -7,7 +7,6 @@
 #include <math.h>
 #include <iostream>
 
-#include "constants.cpp"
 #include "TextureHolder.cpp"
 #include "GameModel.h"
 #include "GraphicEvent.h"
@@ -16,6 +15,7 @@
 #include "AddHpEvent.h"
 #include "Event.h"
 #include "HitMonster.h"
+#include "HitHero.h"
 
 
 class GameWindow {
@@ -309,13 +309,18 @@ public:
 							if (gamemodel->getFieldHolder()->getField(field_x, field_y)->GetMonster() != nullptr) {
 								gamemodel->getHero()->clearTarget();
 								gamemodel->getHero()->setTarget(field_x, field_y);
-								HitMonster *event = new HitMonster(gamemodel, &graphiceventq, now + 1000);
+								HitMonster *event = new HitMonster(gamemodel, &graphiceventq, now + 700);
+								HitHero *event2 = new HitHero(gamemodel, &graphiceventq, now + 1000);
 								event->addField(gamemodel->getFieldHolder()->getField(field_x, field_y));
+								event2->addField(gamemodel->getFieldHolder()->getField(field_x, field_y));
 								gamemodel->getEventQ()->addEvent(event);
+								gamemodel->getEventQ()->addEvent(event2);
+
 							}
 							else { 
 								gamemodel->getHero()->clearTarget(); 
 								gamemodel->getEventQ()->deleteEventsWithType("HitMonster");
+								gamemodel->getEventQ()->deleteEventsWithType("HitHero");
 							}
 						}
 					}

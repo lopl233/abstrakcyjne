@@ -25,9 +25,12 @@ public:
 		int atk_val = hero->getAtkVal();
 		field->GetMonster()->setCurrHp(monster_hp - atk_val);
 		if (field->GetMonster()->getCurrHp() <= 0) {
+			hero->addExp(field->GetMonster()->getExp());
 			field->setMonster(nullptr);
 			gamemodel->getHero()->clearTarget();
 			gamemodel->getEventQ()->deleteEventsWithType("HitPlayer");
+			gamemodel->getEventQ()->deleteEventsWithType("HitHero");
+
 		}
 		else
 		{

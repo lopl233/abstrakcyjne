@@ -2,6 +2,7 @@
 #include <string>
 #include "Direction.h"
 #include "Field.h"
+#include <iostream>
 
 class Hero
 {
@@ -43,7 +44,9 @@ public:
 	virtual int getNEXTLVLEXP() { return next_lvl_exp; }
 	virtual int getLVL() { return lvl; }
 	virtual int getX() { return x; }
+	virtual void setX(int val) { x = val; }
 	virtual int getY() { return y; }
+	virtual void setY(int val) { y = val; }
 	virtual int getAtkVal() { return atk_val; }
 	virtual void setAtkVal(int val) { atk_val = val; }
 	virtual Direction getDirection() { return direction; }
@@ -57,11 +60,12 @@ public:
 	virtual int getTargetY() { return target_y; }
 	virtual void addExp(const int EXP) {
 		exp += EXP;
+		std::cout << "adding exp : " << EXP << "exp :" << exp << "lvl " << lvl << std::endl;
 		while (exp >= next_lvl_exp) {
-			exp = -next_lvl_exp;
+			
 			lvlUp();
 			lvl += 1;
-			next_lvl_exp = (int)(next_lvl_exp*1.2);
+			next_lvl_exp += (int)(next_lvl_exp*1.2);
 		}
 	}
 	virtual std::string getFilename()

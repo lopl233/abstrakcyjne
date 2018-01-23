@@ -7,7 +7,7 @@ class Griffin :
 public:
 	Griffin();
 	Griffin(int maxHP, int lvl);
-	int getAtkVal() override;
+	int getAtkVal() { return getLevel() * 20; };
 	~Griffin();
 };
 

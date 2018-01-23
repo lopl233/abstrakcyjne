@@ -6,7 +6,7 @@ class Ladybug :
 public:
 	Ladybug();
 	Ladybug(int maxHP, int lvl);
-	int getAtkVal() override;
+	int getAtkVal() { return (int)(getLevel() * 0.5); };
 	~Ladybug();
 };
 
