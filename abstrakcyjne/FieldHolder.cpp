@@ -31,17 +31,17 @@ FieldHolder::FieldHolder(const int size)
 
 FieldHolder::FieldHolder(const int size, const double prob) : FieldHolder(size)
 {
-	GetRandom<Monster, Ladybug, Griffin> getRandomMonster{};
-	GetRandom<Potion, HPPotion, MPPotion> getRandomPotion{};
+	GetRandom<Monster, Ladybug, Griffin> getRandomMonster(prob);
+	GetRandom<Potion, HPPotion, MPPotion> getRandomPotion(prob / 2);
 
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size; j++)
 		{
-			(*fields)[i][j]->AddMonster(getRandomMonster(prob));
+			(*fields)[i][j]->AddMonster(getRandomMonster());
 			if ((*fields)[i][j]->GetMonster() == nullptr)
 			{
-				(*fields)[i][j]->AddPotion(getRandomPotion(prob));
+				(*fields)[i][j]->AddPotion(getRandomPotion());
 			}
 		}
 	}

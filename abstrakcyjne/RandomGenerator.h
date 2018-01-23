@@ -16,9 +16,15 @@ public:
 template<typename T, typename K1, typename K2>
 struct GetRandom
 {
-	std::shared_ptr<T> operator()(const double prob)
+private:
+	double p;
+public:
+	GetRandom() : p(1.0) {  }
+	GetRandom(const double p) : p(p) {}
+
+	std::shared_ptr<T> operator()()
 	{
-		if (RandomH::random_bool_with_prob(prob))
+		if (RandomH::random_bool_with_prob(p))
 			switch (rand() % 2)
 			{
 			case 0:
@@ -35,7 +41,13 @@ struct GetRandom
 template<typename K1, typename K2>
 struct GetRandom<Field, K1, K2>
 {
-	Field* operator()(const double prob = 1.0) const
+private:
+	double p;
+public:
+	GetRandom() : p(1.0) {  }
+	GetRandom(const double p) : p(p) {}
+
+	Field* operator()() const
 	{
 		switch (rand() % 2)
 		{

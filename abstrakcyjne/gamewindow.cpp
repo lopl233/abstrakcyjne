@@ -4,18 +4,15 @@
 #include <cstdio>
 #include <map>  
 #include <string>
-#include <math.h>
-#include <iostream>
 
 #include "TextureHolder.cpp"
 #include "GameModel.h"
 #include "GraphicEvent.h"
 #include "GraphicEventQ.h"
-#include "PointToPointEvent.h"
 #include "AddHpEvent.h"
-#include "Event.h"
 #include "HitMonster.h"
 #include "HitHero.h"
+#include "constants.cpp"
 
 
 class GameWindow {
