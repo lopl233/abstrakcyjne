@@ -1,8 +1,6 @@
 #include "GameModel.h"
 #include "constants.cpp"
 #include "Warrior.h"
-#include "AddHpEvent.h"
-
 
 
 GameModel::GameModel()
