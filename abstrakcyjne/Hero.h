@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Direction.h"
+#include "Field.h"
 
 class Hero
 {
@@ -16,7 +17,13 @@ private:
 	int exp;
 	int next_lvl_exp;
 	std::string filename;
+	bool have_target = false;
+	int target_x;
+	int target_y;
+	int atk_val;
+
 	virtual void lvlUp() = 0;
+
 
 
 protected:
@@ -37,9 +44,17 @@ public:
 	virtual int getLVL() { return lvl; }
 	virtual int getX() { return x; }
 	virtual int getY() { return y; }
+	virtual int getAtkVal() { return atk_val; }
+	virtual void setAtkVal(int val) { atk_val = val; }
 	virtual Direction getDirection() { return direction; }
+
 	virtual void addHP(const int val) { currentHp += val; if (currentHp > maxHp) currentHp = maxHp; }
 	virtual void addMP(const int val) { currentMp += val; if (currentMp > maxMp) currentMp = maxMp; }
+	virtual void setTarget(int x, int y) { have_target = true; target_x = x; target_y = y; }
+	virtual void clearTarget() { have_target = false; }
+	virtual bool haveTarget() { return have_target; }
+	virtual int getTargetX() { return target_x; }
+	virtual int getTargetY() { return target_y; }
 	virtual void addExp(const int EXP) {
 		exp += EXP;
 		while (exp >= next_lvl_exp) {
