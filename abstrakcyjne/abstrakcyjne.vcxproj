@@ -133,6 +133,8 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldHolder.cpp" />
     <ClCompile Include="GraphicEventQ.cpp" />
+    <ClCompile Include="HPPotion.cpp" />
+    <ClCompile Include="MPPotion.cpp" />
     <ClCompile Include="PointToPointEvent.cpp" />
     <ClCompile Include="ForestField.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="Griffin.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Ladybug.cpp" />
+    <ClCompile Include="Potion.cpp" />
     <ClCompile Include="RandomFieldGenerator.cpp" />
     <ClCompile Include="RandomMonsterGenerator.cpp" />
     <ClCompile Include="SandField.cpp" />
@@ -161,12 +164,16 @@
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldHolder.h" />
     <ClInclude Include="GraphicEventQ.h" />
+    <ClInclude Include="HPPotion.h" />
+    <ClInclude Include="MPPotion.h" />
     <ClInclude Include="PointToPointEvent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameModel.h" />
     <ClInclude Include="GraphicEvent.h" />
     <ClInclude Include="Griffin.h" />
     <ClInclude Include="Ladybug.h" />
+    <ClInclude Include="Potion.h" />
+    <ClInclude Include="PotionType.h" />
     <ClInclude Include="RandomFieldGenerator.h" />
     <ClInclude Include="RandomMonsterGenerator.h" />
     <ClInclude Include="Vector2D.h" />
