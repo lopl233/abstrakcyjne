@@ -11,7 +11,7 @@ public:
 	AddHpEvent(GameModel *gamemodel, GraphicEventQ * graphiceventq, int processtime);
 	~AddHpEvent();
 
-	virtual void processEvent() {
+	virtual void processEvent(int now) {
 		Hero * hero = gamemodel->getHero();
 		int maxhp = hero->getMAX_HP();
 		hero->addHP((int)(maxhp * 0.05));
