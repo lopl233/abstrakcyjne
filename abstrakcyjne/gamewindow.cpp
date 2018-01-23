@@ -123,6 +123,18 @@ public:
 		return y;
 	}
 
+	void checkPotions() const
+	{
+		auto hero = gamemodel->getHero();
+		auto fieldholder = gamemodel->getFieldHolder();
+		const auto potion = fieldholder->getField(hero->getX(), hero->getY())->GetPotion();
+		if (potion != nullptr)
+		{
+			hero->drinkPotion(potion);
+			fieldholder->getField(hero->getX(), hero->getY())->AddPotion(nullptr);
+		}
+	}
+
 	void drawMap() {
 		Hero * hero = gamemodel->getHero();
 		FieldHolder * fieldholder = gamemodel->getFieldHolder();
@@ -191,13 +203,13 @@ public:
 		int hpWidth = 0;
 		int mpWidth = 0;
 		if (gamemodel->getHero()->getMAX_HP() != 0) {
-			hpWidth = gamemodel->getHero()->getCURRENT_HP() / gamemodel->getHero()->getMAX_HP() * 280;
-			drawRectangle(720, 12, hpWidth, 20, 255, 0, 0);
+			double hp = double(gamemodel->getHero()->getCURRENT_HP()) / double(gamemodel->getHero()->getMAX_HP()) * 280;
+			drawRectangle(720, 12, hp, 20, 255, 0, 0);
 			drawTexture(700, 12, 30, 20, "HP.png");
 		}
 		if (gamemodel->getHero()->getMAX_MP() != 0) {
-			mpWidth = gamemodel->getHero()->getCURRENT_MP() / gamemodel->getHero()->getMAX_MP() * 280;
-			drawRectangle(720, 32, mpWidth, 20, 255, 0, 0);
+			double mp = double(gamemodel->getHero()->getCURRENT_MP()) / double(gamemodel->getHero()->getMAX_MP()) * 280;
+			drawRectangle(720, 32, mp, 20, 255, 0, 0);
 			drawTexture(700, 32, 30, 20, "MP.png");
 		}
 	}
@@ -245,6 +257,7 @@ public:
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 
+		checkPotions();
 		drawMap();
 		drawHero();
 		drawAllEvents();
