@@ -317,6 +317,8 @@ public:
 							int field_y = (int)(getMovingY() + 5 - ((y - 10) / FIELD_SIZE));
 							if (gamemodel->getFieldHolder()->getField(field_x, field_y)->GetMonster() != nullptr) {
 								gamemodel->getHero()->clearTarget();
+								gamemodel->getEventQ()->deleteEventsWithType("HitMonster");
+								gamemodel->getEventQ()->deleteEventsWithType("HitHero");
 								gamemodel->getHero()->setTarget(field_x, field_y);
 								HitMonster *event = new HitMonster(gamemodel, &graphiceventq, now + 1000, field_x, field_y);
 								HitHero *event2 = new HitHero(gamemodel, &graphiceventq, now + 1000, field_x, field_y);
@@ -358,7 +360,6 @@ public:
 			if (now - lastDraw >= 1000 / FPS) {
 				lastDraw = SDL_GetTicks();
 				draw();
-				system("cls");
 				std::cout << "LVL = " << gamemodel->getHero()->getLVL() << endl;
 				frames++;
 
