@@ -12,7 +12,6 @@
 #include "AddHpEvent.h"
 #include "HitMonster.h"
 #include "HitHero.h"
-#include "constants.cpp"
 
 
 class GameWindow {
@@ -359,6 +358,8 @@ public:
 			if (now - lastDraw >= 1000 / FPS) {
 				lastDraw = SDL_GetTicks();
 				draw();
+				system("cls");
+				std::cout << "LVL = " << gamemodel->getHero()->getLVL() << endl;
 				frames++;
 
 				

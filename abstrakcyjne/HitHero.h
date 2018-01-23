@@ -27,7 +27,6 @@ public:
 		int hero_hp = hero->getCURRENT_HP();
 		auto monster = field->GetMonster();
 		int atk_val = monster-> getAtkVal();
-		std::cout << "Attack val = " << atk_val << std::endl;
 		hero->setCURRENT_HP(hero_hp - atk_val);
 		if (hero->getCURRENT_HP() <= 0) {
 			hero->clearTarget();
@@ -47,7 +46,6 @@ public:
 
 		}
 
-		std::cout << "Hero hp = " << hero->getCURRENT_HP() << std::endl;
 
 	}
 
