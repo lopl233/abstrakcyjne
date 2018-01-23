@@ -25,6 +25,11 @@ public:
 	{
 		return monster;
 	}
+
+	virtual void setMonster(std::shared_ptr<Monster> monster)
+	{
+		this->monster = monster;
+	}
 	virtual void AddMonster(const std::shared_ptr<Monster> monster)
 	{
 		if (potion == nullptr)
