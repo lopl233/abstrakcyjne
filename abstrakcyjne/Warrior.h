@@ -7,6 +7,7 @@ class Warrior :
 private:
 	void lvlUp(){
 		setMAX_HP(getMAX_HP() + 50);
+		setAtkVal(getAtkVal() + 5);
 	}
 
 public:

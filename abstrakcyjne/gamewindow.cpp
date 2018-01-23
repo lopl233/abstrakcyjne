@@ -7,7 +7,6 @@
 #include <math.h>
 #include <iostream>
 
-#include "constants.cpp"
 #include "TextureHolder.cpp"
 #include "GameModel.h"
 #include "GraphicEvent.h"
@@ -15,6 +14,8 @@
 #include "PointToPointEvent.h"
 #include "AddHpEvent.h"
 #include "Event.h"
+#include "HitMonster.h"
+#include "HitHero.h"
 
 
 class GameWindow {
@@ -146,14 +147,24 @@ public:
 				}
 				if(filename.compare("") != 0)
 				{
+					
 					drawTexture(
 						(int)((getMovingX() - x) * FIELD_SIZE) + 310,
 						(int)((getMovingY() - y) * FIELD_SIZE) + 310,
 						FIELD_SIZE,
 						FIELD_SIZE,
 						filename);
+					
 				}
 			}
+		}
+		if (hero->haveTarget()) {
+				drawTexture(
+					(int)((getMovingX() - hero->getTargetX()) * FIELD_SIZE) + 310,
+					(int)((getMovingY() - hero->getTargetY()) * FIELD_SIZE) + 310,
+					FIELD_SIZE,
+					FIELD_SIZE,
+					"target.png");
 		}
 	}
 
@@ -288,6 +299,34 @@ public:
 			//Obs³uga eventów, w tym wcisakania klawiszy
 			if (SDL_PollEvent(&event)) {
 				switch (event.type) {
+				case SDL_MOUSEBUTTONDOWN: {
+
+					if (event.button.button == SDL_BUTTON_LEFT){
+						SDL_GetMouseState(&x, &y);
+						if (x > 10 && x < 670 && y>10 && x < 670) {
+							int field_x = (int)(getMovingX() + 5 - ((x - 10) / FIELD_SIZE));
+							int field_y = (int)(getMovingY() + 5 - ((y - 10) / FIELD_SIZE));
+							if (gamemodel->getFieldHolder()->getField(field_x, field_y)->GetMonster() != nullptr) {
+								gamemodel->getHero()->clearTarget();
+								gamemodel->getHero()->setTarget(field_x, field_y);
+								HitMonster *event = new HitMonster(gamemodel, &graphiceventq, now + 700);
+								HitHero *event2 = new HitHero(gamemodel, &graphiceventq, now + 1000);
+								event->addField(gamemodel->getFieldHolder()->getField(field_x, field_y));
+								event2->addField(gamemodel->getFieldHolder()->getField(field_x, field_y));
+								gamemodel->getEventQ()->addEvent(event);
+								gamemodel->getEventQ()->addEvent(event2);
+
+							}
+							else { 
+								gamemodel->getHero()->clearTarget(); 
+								gamemodel->getEventQ()->deleteEventsWithType("HitMonster");
+								gamemodel->getEventQ()->deleteEventsWithType("HitHero");
+							}
+						}
+					}
+				
+					break;
+				};
 				case SDL_QUIT:    running = false; break;
 				case SDL_KEYDOWN: onKeyDown(&event); break;
 				case SDL_KEYUP:   onKeyUp(&event);   break;
@@ -308,16 +347,10 @@ public:
 			if (now - lastDraw >= 1000 / FPS) {
 				lastDraw = SDL_GetTicks();
 				draw();
-				SDL_GetMouseState(&x, &y);
-				if (x > 10 && x < 670 && y>10 && x < 670) {
-					int field_x = getMovingX() - 5 + ((x - 10) / FIELD_SIZE);
-					int field_y = getMovingY() - 5 + ((y - 10) / FIELD_SIZE);
-					//cout << field_x << " " << field_y << endl;
-				
-				}
 				frames++;
-			}
 
+				
+			}
 		}
 
 	}

@@ -133,6 +133,8 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldHolder.cpp" />
     <ClCompile Include="GraphicEventQ.cpp" />
+    <ClCompile Include="HitHero.cpp" />
+    <ClCompile Include="HitMonster.cpp" />
     <ClCompile Include="HPPotion.cpp" />
     <ClCompile Include="MPPotion.cpp" />
     <ClCompile Include="PointToPointEvent.cpp" />
@@ -162,6 +164,8 @@
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldHolder.h" />
     <ClInclude Include="GraphicEventQ.h" />
+    <ClInclude Include="HitHero.h" />
+    <ClInclude Include="HitMonster.h" />
     <ClInclude Include="HPPotion.h" />
     <ClInclude Include="MPPotion.h" />
     <ClInclude Include="PointToPointEvent.h" />

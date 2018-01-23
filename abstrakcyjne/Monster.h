@@ -15,6 +15,11 @@ public:
 		return currentHp;
 	}
 
+	virtual void setCurrHp(int val) 
+	{
+		currentHp = val;
+	}
+
 	virtual int getLevel()
 	{
 		return level;
@@ -26,13 +31,22 @@ public:
 	}
 
 	virtual int getAtkVal() = 0;
+	
+	virtual int getExp()
+	{
+		return exp;
+	}
+
+	virtual void setExp(int val) { exp = val; }
+
 
 protected:
 	Monster() {}
-	Monster(int maxHP, int lvl, std::string filename) : maxHp(maxHP), currentHp(maxHP), filename(filename){}
+	Monster(int maxHP, int lvl, std::string filename) : level(lvl), maxHp(maxHP), currentHp(maxHP), filename(filename){}
 private:
 	int maxHp;
 	int currentHp;
 	int level;
+	int exp;
 	std::string filename;
 };
