@@ -24,6 +24,11 @@ public:
 		return filename;
 	}
 
+	virtual PotionType getPotionType()
+	{
+		return potionType;
+	}
+
 	virtual ~Potion();
 };
 

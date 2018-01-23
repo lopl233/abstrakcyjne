@@ -11,6 +11,7 @@
 FieldHolder::FieldHolder(const int size)
 {
 	fields = new Vector2D<Field*>(size, size);
+	const GetRandom<Field, SandField, ForestField> getRandomField{};
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size; j++)
@@ -21,7 +22,7 @@ FieldHolder::FieldHolder(const int size)
 			}
 			else
 			{
-				(*fields)[i][j] = GetRandom<Field, SandField, ForestField>()();
+				(*fields)[i][j] = getRandomField();
 
 			}
 		}
@@ -30,14 +31,17 @@ FieldHolder::FieldHolder(const int size)
 
 FieldHolder::FieldHolder(const int size, const double prob) : FieldHolder(size)
 {
+	GetRandom<Monster, Ladybug, Griffin> getRandomMonster{};
+	GetRandom<Potion, HPPotion, MPPotion> getRandomPotion{};
+
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size; j++)
 		{
-			(*fields)[i][j]->AddMonster(GetRandom<Monster, Griffin, Ladybug>()(prob));
+			(*fields)[i][j]->AddMonster(getRandomMonster(prob));
 			if ((*fields)[i][j]->GetMonster() == nullptr)
 			{
-				(*fields)[i][j]->AddPotion(GetRandom<Potion, HPPotion, MPPotion>()(prob));
+				(*fields)[i][j]->AddPotion(getRandomPotion(prob));
 			}
 		}
 	}

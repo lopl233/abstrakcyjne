@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include "Direction.h"
+#include <memory>
+#include "Potion.h"
 
 class Hero
 {
@@ -70,6 +72,18 @@ public:
 		case SOUTH:
 			y--;
 			break;
+		}
+	}
+	virtual void drinkPotion(std::shared_ptr<Potion> potion)
+	{
+		switch (potion->getPotionType()) {
+		case HP:
+			addHP(potion->getVal());
+			break;
+		case MP:
+			addMP(potion->getVal());
+			break;
+		default:;
 		}
 	}
 };

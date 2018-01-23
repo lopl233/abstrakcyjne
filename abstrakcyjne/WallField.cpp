@@ -8,7 +8,7 @@ WallField::WallField()
 	canBeSteped = false;
 }
 
-void WallField::AddMonster(std::shared_ptr<Monster> monster)
+void WallField::AddMonster(std::shared_ptr<Monster>)
 {
 }
 
