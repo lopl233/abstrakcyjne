@@ -21,7 +21,7 @@ public:
 		auto it = events->begin();
 		while ((!events->empty())&&(*it).first < now)
 		{
-			(*it).second->processEvent();
+			(*it).second->processEvent(now);
 			events->erase(it);
 			it = events->begin();
 		}
@@ -33,7 +33,7 @@ public:
 				it = events->erase(it);
 			else
 				++it;
-		}
+		}									
 	}
 
 };

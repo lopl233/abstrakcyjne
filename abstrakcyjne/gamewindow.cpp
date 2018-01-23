@@ -322,13 +322,15 @@ public:
 							if (gamemodel->getFieldHolder()->getField(field_x, field_y)->GetMonster() != nullptr) {
 								gamemodel->getHero()->clearTarget();
 								gamemodel->getHero()->setTarget(field_x, field_y);
-								HitMonster *event = new HitMonster(gamemodel, &graphiceventq, now + 700);
-								HitHero *event2 = new HitHero(gamemodel, &graphiceventq, now + 1000);
+								HitMonster *event = new HitMonster(gamemodel, &graphiceventq, now + 1000, field_x, field_y);
+								HitHero *event2 = new HitHero(gamemodel, &graphiceventq, now + 1000, field_x, field_y);
 								event->addField(gamemodel->getFieldHolder()->getField(field_x, field_y));
 								event2->addField(gamemodel->getFieldHolder()->getField(field_x, field_y));
 								gamemodel->getEventQ()->addEvent(event);
 								gamemodel->getEventQ()->addEvent(event2);
-
+								graphiceventq.addEvent(new PointToPointEvent(now , now + 1000 , gamemodel->getHero()->getX(), field_x, gamemodel->getHero()->getY(), field_y, "shuriken.png"));
+								graphiceventq.addEvent(new PointToPointEvent(now , now + 1000, field_x, gamemodel->getHero()->getX(), field_y, gamemodel->getHero()->getY(), "fireball.png"));
+					
 							}
 							else { 
 								gamemodel->getHero()->clearTarget(); 
